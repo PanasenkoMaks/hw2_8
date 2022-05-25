@@ -4,6 +4,7 @@ import com.example.hw2_8.domain.Employee;
 import com.example.hw2_8.sevice.DepartmentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,15 +20,15 @@ public class DepartmentController {
             this.departmentService = departmentService;
         }
         @GetMapping("/min-salary")
-        public Employee findMinSalaryDepartmet  (int department){
+        public Employee findMinSalaryDepartmet  (@RequestParam int department){
             return departmentService.findMinSalaryDepartmet(department);
         }
         @GetMapping("/max-salary")
-        public Employee findMaxSalaryDepartmet (int department){
+        public Employee findMaxSalaryDepartmet (@RequestParam int department){
             return departmentService.findMaxSalaryDepartmet(department);
         }
         @GetMapping("/all")
-        public List<Employee> findAllByDepartment (int department){
+        public List<Employee> findAllByDepartment (@RequestParam int department){
             return departmentService.findAllByDepartment(department);
         }
         @GetMapping(value = "/all", params = {"department"})
