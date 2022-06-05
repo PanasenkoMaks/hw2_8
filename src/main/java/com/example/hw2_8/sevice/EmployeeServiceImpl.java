@@ -1,6 +1,7 @@
 package com.example.hw2_8.sevice;
 
 import com.example.hw2_8.domain.Employee;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -16,8 +17,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employees.containsKey(getKeys(name, surname))) {
             throw new IllegalArgumentException("Такой сотрудник уже есть");
         }
+        if (StringUtils.isEmpty(getKeys(name, surname))){
+            throw new BadParamsException();
+        }
         Employee employee = new Employee(name, surname, salary, department);
-        employees.put(getKeys(name, surname), employee);
+        employees.put(getKeys(StringUtils.upperCase(name), StringUtils.upperCase(surname)), employee);
         return employee;
     }
 
@@ -40,7 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     private String getKeys(String name, String surname) {
-        return name + surname;
+        return StringUtils.upperCase(name) + StringUtils.upperCase(surname);
     }
     @Override
     public Collection<Employee> findAll(){
